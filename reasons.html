@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>A Few More Things — For Amurwabhumi</title>
+
+  <style>
+    :root {
+      --cream: #FFFDD0;
+      --black: #02020A;
+      --navy: #05204A;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at 50% 35%,
+          rgba(5, 32, 74, 0.95),
+          var(--black) 68%
+        );
+      color: var(--cream);
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 18px;
+      border: 1px solid rgba(255, 253, 208, 0.16);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* --------------------
+       BACKGROUND
+    -------------------- */
+
+    .background {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .dot {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: var(--cream);
+      border-radius: 50%;
+      opacity: 0.35;
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .dot:nth-child(1) {
+      top: 18%;
+      left: 12%;
+    }
+
+    .dot:nth-child(2) {
+      top: 30%;
+      right: 16%;
+      animation-delay: 1s;
+    }
+
+    .dot:nth-child(3) {
+      top: 65%;
+      left: 20%;
+      animation-delay: 2s;
+    }
+
+    .dot:nth-child(4) {
+      top: 78%;
+      right: 14%;
+      animation-delay: 3s;
+    }
+
+    .dot:nth-child(5) {
+      top: 48%;
+      left: 7%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+        opacity: 0.25;
+      }
+
+      50% {
+        transform: translateY(-14px);
+        opacity: 0.6;
+      }
+    }
+
+    /* --------------------
+       PAGE
+    -------------------- */
+
+    .page {
+      width: min(900px, 100%);
+      margin: auto;
+      padding: 80px 30px 100px;
+    }
+
+    /* --------------------
+       HEADER
+    -------------------- */
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 90px;
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    .number {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .label {
+      color: var(--cream);
+    }
+
+    /* --------------------
+       HERO
+    -------------------- */
+
+    .hero {
+      max-width: 720px;
+      margin-bottom: 75px;
+    }
+
+    .eyebrow {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      opacity: 0.65;
+    }
+
+    h1 {
+      font-size: clamp(48px, 10vw, 92px);
+      line-height: 0.95;
+      font-weight: 400;
+      letter-spacing: -4px;
+      margin-bottom: 28px;
+    }
+
+    .hero p {
+      max-width: 600px;
+      font-size: 17px;
+      line-height: 1.8;
+      opacity: 0.72;
+    }
+
+    /* --------------------
+       REASON AREA
+    -------------------- */
+
+    .reason-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .tiny-label {
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.5;
+      margin-bottom: 18px;
+    }
+
+    .reason-card {
+      width: min(650px, 100%);
+      min-height: 360px;
+      position: relative;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 55px 35px;
+
+      border: 1px solid rgba(255, 253, 208, 0.25);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(5, 32, 74, 0.8),
+          rgba(2, 2, 10, 0.92)
+        );
+
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.35);
+
+      overflow: hidden;
+
+      transition:
+        transform 0.5s ease,
+        border-color 0.5s ease;
+    }
+
+    .reason-card::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(255, 253, 208, 0.08);
+      pointer-events: none;
+    }
+
+    .reason-card:hover {
+      border-color: rgba(255, 253, 208, 0.45);
+    }
+
+    .reason-content {
+      position: relative;
+      z-index: 2;
+      max-width: 520px;
+    }
+
+    .reason-number {
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      opacity: 0.45;
+      margin-bottom: 25px;
+    }
+
+    .reason-title {
+      font-size: clamp(30px, 6vw, 52px);
+      line-height: 1.1;
+      font-weight: 400;
+      margin-bottom: 22px;
+    }
+
+    .reason-text {
+      font-size: 16px;
+      line-height: 1.8;
+      opacity: 0.7;
+    }
+
+    /* --------------------
+       BUTTON
+    -------------------- */
+
+    .open-button {
+      margin-top: 35px;
+
+      padding: 15px 28px;
+
+      border: 1px solid rgba(255, 253, 208, 0.5);
+      background: transparent;
+      color: var(--cream);
+
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+
+      cursor: pointer;
+
+      transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease;
+    }
+
+    .open-button:hover {
+      background: var(--cream);
+      color: var(--black);
+      transform: translateY(-2px);
+    }
+
+    /* --------------------
+       MINI NOTE
+    -------------------- */
+
+    .mini-note {
+      max-width: 520px;
+      margin: 80px auto 0;
+
+      text-align: center;
+
+      padding-top: 35px;
+      border-top: 1px solid rgba(255, 253, 208, 0.13);
+    }
+
+    .mini-note span {
+      display: block;
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.45;
+      margin-bottom: 18px;
+    }
+
+    .mini-note p {
+      font-size: 18px;
+      line-height: 1.7;
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    /* --------------------
+       NEXT
+    -------------------- */
+
+    .next {
+      display: flex;
+      justify-content: center;
+      margin-top: 90px;
+    }
+
+    .next a {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+
+      color: var(--cream);
+      text-decoration: none;
+
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+
+      opacity: 0.7;
+
+      transition:
+        opacity 0.3s ease,
+        gap 0.3s ease;
+    }
+
+    .next a:hover {
+      opacity: 1;
+      gap: 20px;
+    }
+
+    .arrow {
+      font-size: 17px;
+    }
+
+    /* --------------------
+       FADE
+    -------------------- */
+
+    .fade {
+      opacity: 0;
+      transform: translateY(25px);
+      animation: appear 1s ease forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.15s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.45s;
+    }
+
+    @keyframes appear {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* --------------------
+       CARD CHANGE
+    -------------------- */
+
+    .changing {
+      animation: changeReason 0.45s ease;
+    }
+
+    @keyframes changeReason {
+      0% {
+        opacity: 0.2;
+        transform: translateY(12px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* --------------------
+       MOBILE
+    -------------------- */
+
+    @media (max-width: 600px) {
+
+      body::before {
+        inset: 10px;
+      }
+
+      .page {
+        padding:
+          55px 24px
+          75px;
+      }
+
+      .top {
+        margin-bottom: 70px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .reason-card {
+        min-height: 390px;
+        padding: 50px 28px;
+      }
+
+      .reason-card::before {
+        inset: 8px;
+      }
+
+      .reason-text {
+        font-size: 15px;
+      }
+
+      .mini-note {
+        margin-top: 65px;
+      }
+    }
+
+    /* --------------------
+       REDUCED MOTION
+    -------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="background">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+
+  <main class="page">
+
+    <header class="top fade">
+      <span class="label">A FEW MORE THINGS</span>
+      <span class="number">07 / 09</span>
+    </header>
+
+
+    <section class="hero fade delay-1">
+
+      <div class="eyebrow">
+        Things I don't always say
+      </div>
+
+      <h1>
+        A few reasons
+        I adore you.
+      </h1>
+
+      <p>
+        I could probably write a ridiculously long list,
+        but honestly, I'd rather leave a few things here
+        for you to discover one by one.
+      </p>
+
+    </section>
+
+
+    <section class="reason-section fade delay-2">
+
+      <div class="tiny-label">
+        Tap for another one
+      </div>
+
+      <article class="reason-card">
+
+        <div class="reason-content" id="reasonContent">
+
+          <div class="reason-number" id="reasonNumber">
+            01 / 09
+          </div>
+
+          <h2 class="reason-title" id="reasonTitle">
+            You became important to me.
+          </h2>
+
+          <p class="reason-text" id="reasonText">
+            Not all at once. Not in some dramatic movie-scene
+            kind of way. You just slowly became someone
+            I genuinely didn't want to lose.
+          </p>
+
+        </div>
+
+      </article>
+
+      <button
+        class="open-button"
+        id="openReason"
+        type="button"
+      >
+        Open another
+      </button>
+
+    </section>
+
+
+    <section class="mini-note fade delay-3">
+
+      <span>For Amurwabhumi</span>
+
+      <p>
+        “Maybe I don't need a hundred reasons.
+        Maybe one simple reason is enough:
+        you're you, and somehow, that's enough for me.”
+      </p>
+
+    </section>
+
+
+    <div class="next fade delay-3">
+
+      <a href="coded-love.html">
+        <span>There's something I coded for you</span>
+        <span class="arrow">→</span>
+      </a>
+
+    </div>
+
+  </main>
+
+
+  <script>
+
+    const reasons = [
+
+      {
+        title: "You became important to me.",
+        text:
+          "Not all at once. Not in some dramatic movie-scene kind of way. You just slowly became someone I genuinely didn't want to lose."
+      },
+
+      {
+        title: "You make my days feel a little different.",
+        text:
+          "Sometimes nothing special is even happening. But somehow, knowing you're part of my day makes an ordinary day feel less ordinary."
+      },
+
+      {
+        title: "I like the version of me around you.",
+        text:
+          "There's something comforting about being able to just exist. No perfect version, no trying too hard. Just me, being me."
+      },
+
+      {
+        title: "You became part of my thoughts.",
+        text:
+          "A random song. A certain time of day. Something funny I see. Somehow, little things keep reminding me of you."
+      },
+
+      {
+        title: "You're someone I want to keep knowing.",
+        text:
+          "Even after all the things I already know about you, I still feel like there's more to discover. And honestly, I like that."
+      },
+
+      {
+        title: "You make the little moments matter.",
+        text:
+          "Maybe we'll forget some of the exact conversations someday. But I don't think I'll forget how those little moments made me feel."
+      },
+
+      {
+        title: "I never planned for this.",
+        text:
+          "You weren't some carefully planned chapter. You just showed up in my life, and somehow the story started writing itself."
+      },
+
+      {
+        title: "I appreciate your existence.",
+        text:
+          "Not just what you do for me. Not just the moments we share. Just the simple fact that somewhere in this huge world, you exist."
+      },
+
+      {
+        title: "And, well... it's you.",
+        text:
+          "After everything, I think this is the simplest way I can put it. Out of everyone I could've met, I'm really glad I met you."
+      }
+
+    ];
+
+
+    let currentReason = 0;
+
+
+    const reasonContent =
+      document.getElementById("reasonContent");
+
+    const reasonNumber =
+      document.getElementById("reasonNumber");
+
+    const reasonTitle =
+      document.getElementById("reasonTitle");
+
+    const reasonText =
+      document.getElementById("reasonText");
+
+    const openReason =
+      document.getElementById("openReason");
+
+
+    function showReason(index) {
+
+      reasonContent.classList.remove("changing");
+
+      void reasonContent.offsetWidth;
+
+      reasonContent.classList.add("changing");
+
+      const reason = reasons[index];
+
+      reasonNumber.textContent =
+        String(index + 1).padStart(2, "0")
+        + " / "
+        + String(reasons.length).padStart(2, "0");
+
+      reasonTitle.textContent =
+        reason.title;
+
+      reasonText.textContent =
+        reason.text;
+    }
+
+
+    openReason.addEventListener("click", () => {
+
+      currentReason++;
+
+      if (currentReason >= reasons.length) {
+        currentReason = 0;
+      }
+
+      showReason(currentReason);
+
+    });
+
+
+    /* --------------------
+       PAGE TRANSITION
+    -------------------- */
+
+    document.querySelectorAll("a").forEach(link => {
+
+      link.addEventListener("click", function(event) {
+
+        const href = this.getAttribute("href");
+
+        if (!href || href.startsWith("#")) return;
+
+        event.preventDefault();
+
+        document.body.style.transition =
+          "opacity 0.5s ease";
+
+        document.body.style.opacity = "0";
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>

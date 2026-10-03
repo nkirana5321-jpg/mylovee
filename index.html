@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta name="theme-color" content="#05204A">
+    <meta
+        name="description"
+        content="A little surprise made just for you."
+    >
+
+    <title>A Little Something For You</title>
+
+    <style>
+
+        /* ==================================================
+           COLOR PALETTE
+        ================================================== */
+
+        :root {
+            --black: #02020A;
+            --navy: #05204A;
+            --cream: #FFFDD0;
+        }
+
+
+        /* ==================================================
+           RESET
+        ================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            overflow: hidden;
+
+            background: var(--navy);
+            color: var(--cream);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+
+        /* ==================================================
+           OPENING
+        ================================================== */
+
+        .opening {
+            position: relative;
+
+            width: 100%;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 45%,
+                    rgba(5, 32, 74, 0.95) 0%,
+                    rgba(5, 32, 74, 0.75) 35%,
+                    var(--black) 100%
+                );
+        }
+
+
+        /* ==================================================
+           BACKGROUND GLOW
+        ================================================== */
+
+        .glow {
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%);
+
+            background: var(--navy);
+
+            opacity: 0.45;
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            animation:
+                breathingGlow
+                6s
+                ease-in-out
+                infinite;
+
+            pointer-events: none;
+        }
+
+        @keyframes breathingGlow {
+
+            0%,
+            100% {
+                transform:
+                    translate(-50%, -50%)
+                    scale(0.85);
+
+                opacity: 0.25;
+            }
+
+            50% {
+                transform:
+                    translate(-50%, -50%)
+                    scale(1.15);
+
+                opacity: 0.55;
+            }
+        }
+
+
+        /* ==================================================
+           DECORATIVE LINES
+        ================================================== */
+
+        .line {
+            position: absolute;
+
+            background: var(--cream);
+
+            opacity: 0.15;
+
+            pointer-events: none;
+        }
+
+        .line.horizontal {
+            width: 100%;
+            height: 1px;
+
+            left: 0;
+        }
+
+        .line.top {
+            top: 11%;
+        }
+
+        .line.bottom {
+            bottom: 11%;
+        }
+
+        .line.vertical {
+            width: 1px;
+            height: 100%;
+
+            top: 0;
+        }
+
+        .line.left {
+            left: 8%;
+        }
+
+        .line.right {
+            right: 8%;
+        }
+
+
+        /* ==================================================
+           CONTENT
+        ================================================== */
+
+        .content {
+            position: relative;
+            z-index: 5;
+
+            width: 100%;
+            max-width: 700px;
+
+            text-align: center;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        /* ==================================================
+           EYEBROW
+        ================================================== */
+
+        .eyebrow {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 10px;
+
+            font-weight: 400;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            color: var(--cream);
+
+            opacity: 0;
+
+            animation:
+                fadeUp 1.4s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                0.3s
+                forwards;
+        }
+
+
+        /* ==================================================
+           TITLE
+        ================================================== */
+
+        .title {
+            margin-top: 25px;
+
+            font-size:
+                clamp(42px, 10vw, 78px);
+
+            font-weight: 400;
+
+            line-height: 0.98;
+
+            letter-spacing: -2px;
+
+            color: var(--cream);
+
+            opacity: 0;
+
+            animation:
+                fadeUp 1.6s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                0.55s
+                forwards;
+        }
+
+
+        /* ==================================================
+           SUBTITLE
+        ================================================== */
+
+        .subtitle {
+            max-width: 420px;
+
+            margin-top: 27px;
+
+            font-size: 15px;
+
+            line-height: 1.8;
+
+            font-weight: 400;
+
+            color: var(--cream);
+
+            opacity: 0;
+
+            animation:
+                fadeUp 1.5s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                0.8s
+                forwards;
+        }
+
+
+        /* ==================================================
+           BUTTON
+        ================================================== */
+
+        .open-button {
+            position: relative;
+
+            margin-top: 45px;
+
+            min-width: 150px;
+
+            padding: 15px 32px;
+
+            border:
+                1px solid var(--cream);
+
+            border-radius: 0;
+
+            background: transparent;
+
+            color: var(--cream);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 10px;
+
+            font-weight: 500;
+
+            letter-spacing: 4px;
+
+            cursor: pointer;
+
+            overflow: hidden;
+
+            transition:
+                color 0.45s ease,
+                background 0.45s ease,
+                transform 0.3s ease;
+
+            opacity: 0;
+
+            animation:
+                fadeUp 1.5s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                1.1s
+                forwards;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .open-button::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 0%;
+
+            background: var(--cream);
+
+            transition:
+                height 0.45s ease;
+
+            z-index: -1;
+        }
+
+        .open-button:hover {
+            color: var(--black);
+
+            transform:
+                translateY(-3px);
+        }
+
+        .open-button:hover::before {
+            height: 100%;
+        }
+
+        .open-button:active {
+            transform:
+                scale(0.97);
+        }
+
+
+        /* ==================================================
+           BOTTOM TEXT
+        ================================================== */
+
+        .bottom-text {
+            position: absolute;
+
+            bottom: 5%;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            width: 100%;
+
+            text-align: center;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 8px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            color: var(--cream);
+
+            opacity: 0;
+
+            animation:
+                fadeIn 2s ease
+                1.7s
+                forwards;
+        }
+
+
+        /* ==================================================
+           DECORATIVE DOTS
+        ================================================== */
+
+        .dot {
+            position: absolute;
+
+            width: 4px;
+            height: 4px;
+
+            border-radius: 50%;
+
+            background: var(--cream);
+
+            opacity: 0;
+
+            animation:
+                dotFloat
+                5s
+                ease-in-out
+                infinite;
+        }
+
+        .dot.one {
+            top: 27%;
+            left: 17%;
+            animation-delay: 0.5s;
+        }
+
+        .dot.two {
+            top: 38%;
+            right: 15%;
+            animation-delay: 1.4s;
+        }
+
+        .dot.three {
+            bottom: 29%;
+            left: 22%;
+            animation-delay: 2s;
+        }
+
+        .dot.four {
+            bottom: 24%;
+            right: 21%;
+            animation-delay: 2.8s;
+        }
+
+        @keyframes dotFloat {
+
+            0%,
+            100% {
+                opacity: 0.15;
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform:
+                    translateY(-10px);
+            }
+        }
+
+
+        /* ==================================================
+           PAGE TRANSITION
+        ================================================== */
+
+        .page-transition {
+            position: fixed;
+
+            inset: 0;
+
+            background: var(--black);
+
+            z-index: 100;
+
+            pointer-events: none;
+
+            opacity: 0;
+
+            transition:
+                opacity 0.8s ease;
+        }
+
+        .page-transition.active {
+            opacity: 1;
+        }
+
+
+        /* ==================================================
+           ANIMATIONS
+        ================================================== */
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 0.5;
+            }
+        }
+
+
+        /* ==================================================
+           MOBILE
+        ================================================== */
+
+        @media (max-width: 600px) {
+
+            .opening {
+                padding: 25px;
+            }
+
+            .line.left {
+                left: 5%;
+            }
+
+            .line.right {
+                right: 5%;
+            }
+
+            .line.top {
+                top: 7%;
+            }
+
+            .line.bottom {
+                bottom: 7%;
+            }
+
+            .eyebrow {
+                font-size: 8px;
+                letter-spacing: 4px;
+            }
+
+            .title {
+                margin-top: 22px;
+
+                font-size:
+                    clamp(43px, 15vw, 65px);
+
+                letter-spacing: -2px;
+            }
+
+            .subtitle {
+                max-width: 310px;
+
+                margin-top: 23px;
+
+                font-size: 14px;
+
+                line-height: 1.75;
+            }
+
+            .open-button {
+                margin-top: 38px;
+
+                min-width: 140px;
+
+                padding: 14px 25px;
+            }
+
+            .bottom-text {
+                bottom: 4%;
+            }
+
+            .glow {
+                width: 300px;
+                height: 300px;
+
+                filter: blur(80px);
+            }
+        }
+
+
+        /* ==================================================
+           REDUCE MOTION
+        ================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration:
+                    0.01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    0.01ms !important;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ==================================================
+         PERSISTENT MUSIC
+    ================================================== -->
+
+    <audio
+        id="bgMusic"
+        src="music.mp3"
+        preload="auto"
+        loop
+    ></audio>
+
+
+    <!-- ==================================================
+         PAGE TRANSITION
+    ================================================== -->
+
+    <div
+        class="page-transition"
+        id="pageTransition"
+    ></div>
+
+
+    <!-- ==================================================
+         MAIN OPENING PAGE
+    ================================================== -->
+
+    <main class="opening">
+
+        <div class="glow"></div>
+
+
+        <!-- Decorative frame -->
+
+        <div class="line horizontal top"></div>
+
+        <div class="line horizontal bottom"></div>
+
+        <div class="line vertical left"></div>
+
+        <div class="line vertical right"></div>
+
+
+        <!-- Floating dots -->
+
+        <span class="dot one"></span>
+        <span class="dot two"></span>
+        <span class="dot three"></span>
+        <span class="dot four"></span>
+
+
+        <!-- Main content -->
+
+        <section class="content">
+
+            <p class="eyebrow">
+                A little something for you
+            </p>
+
+
+            <h1 class="title">
+                For Amurwabhumi.
+            </h1>
+
+
+            <p class="subtitle">
+                Okay, so i made you a little something.
+                It's kinda cheesy, kinda cute, and honestly,
+                i don't even know why i put this much effort
+                into it. But yeah... you mean that much to me.
+            </p>
+
+
+            <button
+                class="open-button"
+                id="openButton"
+                type="button"
+            >
+                open it, dear.
+            </button>
+
+        </section>
+
+
+        <!-- Bottom text -->
+
+        <p class="bottom-text">
+            made with love · just for you
+        </p>
+
+    </main>
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script>
+
+        const openButton =
+            document.getElementById("openButton");
+
+        const pageTransition =
+            document.getElementById("pageTransition");
+
+        const bgMusic =
+            document.getElementById("bgMusic");
+
+
+        /*
+         * MUSIC
+         *
+         * Music starts ONLY after the user taps
+         * "open it, dear."
+         */
+
+        openButton.addEventListener(
+            "click",
+            async function () {
+
+                try {
+
+                    bgMusic.volume = 0.4;
+
+                    await bgMusic.play();
+
+                    console.log(
+                        "Music started successfully."
+                    );
+
+
+                    /*
+                     * Save music state
+                     */
+
+                    sessionStorage.setItem(
+                        "musicPlaying",
+                        "true"
+                    );
+
+
+                    /*
+                     * Fade transition
+                     */
+
+                    pageTransition.classList.add(
+                        "active"
+                    );
+
+
+                    /*
+                     * Go to Page 02
+                     */
+
+                    setTimeout(
+                        function () {
+
+                            window.location.href =
+                                "intro.html";
+
+                        },
+                        800
+                    );
+
+                } catch (error) {
+
+                    console.log(
+                        "Music failed:",
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+         * Remember current music position
+         */
+
+        setInterval(
+            function () {
+
+                if (!bgMusic.paused) {
+
+                    sessionStorage.setItem(
+                        "musicTime",
+                        bgMusic.currentTime
+                    );
+
+                }
+
+            },
+            300
+        );
+
+    </script>
+
+</body>
+</html>

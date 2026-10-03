@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta name="theme-color" content="#FFFDD0">
+
+    <meta
+        name="description"
+        content="A little place made especially for Amurwabhumi."
+    >
+
+    <title>A little note</title>
+
+
+    <style>
+
+        /* ==================================================
+           COLOR PALETTE
+        ================================================== */
+
+        :root {
+            --black: #02020A;
+            --navy: #05204A;
+            --cream: #FFFDD0;
+        }
+
+
+        /* ==================================================
+           RESET
+        ================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            width: 100%;
+            min-height: 100%;
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+
+            background: var(--cream);
+
+            color: var(--black);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            overflow-x: hidden;
+
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+
+        /* ==================================================
+           PAGE
+        ================================================== */
+
+        .page {
+            position: relative;
+
+            width: 100%;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 40px 25px;
+
+            overflow: hidden;
+        }
+
+
+        /* ==================================================
+           DECORATIVE FRAME
+        ================================================== */
+
+        .frame {
+            position: absolute;
+
+            inset: 24px;
+
+            border: 1px solid
+                rgba(5, 32, 74, 0.18);
+
+            pointer-events: none;
+        }
+
+
+        .frame::before,
+        .frame::after {
+            content: "";
+
+            position: absolute;
+
+            width: 45px;
+            height: 45px;
+
+            border-color: var(--navy);
+
+            opacity: 0.45;
+        }
+
+
+        .frame::before {
+            top: -1px;
+            left: -1px;
+
+            border-top: 1px solid;
+            border-left: 1px solid;
+        }
+
+
+        .frame::after {
+            right: -1px;
+            bottom: -1px;
+
+            border-right: 1px solid;
+            border-bottom: 1px solid;
+        }
+
+
+        /* ==================================================
+           TOP LABEL
+        ================================================== */
+
+        .label {
+            position: absolute;
+
+            top: 52px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 9px;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            color: var(--navy);
+
+            opacity: 0;
+
+            animation:
+                fadeIn 1.2s ease
+                0.3s
+                forwards;
+
+            white-space: nowrap;
+        }
+
+
+        /* ==================================================
+           CONTENT
+        ================================================== */
+
+        .content {
+            position: relative;
+
+            z-index: 5;
+
+            width: 100%;
+            max-width: 650px;
+
+            text-align: center;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        /* ==================================================
+           SMALL NUMBER
+        ================================================== */
+
+        .number {
+            margin-bottom: 25px;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 3px;
+
+            color: var(--navy);
+
+            opacity: 0;
+
+            animation:
+                fadeUp 1.2s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                0.5s
+                forwards;
+        }
+
+
+        /* ==================================================
+           TITLE
+        ================================================== */
+
+        h1 {
+            max-width: 600px;
+
+            font-size: clamp(
+                38px,
+                9vw,
+                68px
+            );
+
+            font-weight: 400;
+
+            line-height: 1.05;
+
+            letter-spacing: -1.8px;
+
+            color: var(--black);
+
+            opacity: 0;
+
+            animation:
+                fadeUp 1.5s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                0.7s
+                forwards;
+        }
+
+
+        /* ==================================================
+           DIVIDER
+        ================================================== */
+
+        .divider {
+            width: 45px;
+            height: 1px;
+
+            margin: 30px 0;
+
+            background: var(--navy);
+
+            opacity: 0;
+
+            animation:
+                expandLine 1.2s ease
+                1s
+                forwards;
+        }
+
+
+        /* ==================================================
+           MESSAGE
+        ================================================== */
+
+        .message {
+            max-width: 480px;
+
+            font-size: 16px;
+
+            line-height: 2;
+
+            color: var(--black);
+
+            opacity: 0;
+
+            animation:
+                fadeUp 1.5s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                1.15s
+                forwards;
+        }
+
+
+        .message .line {
+            display: block;
+        }
+
+
+        .message .emphasis {
+            margin-top: 10px;
+
+            color: var(--navy);
+
+            font-style: italic;
+        }
+
+
+        /* ==================================================
+           CONTINUE BUTTON
+        ================================================== */
+
+        .continue-button {
+            position: relative;
+
+            margin-top: 42px;
+
+            min-width: 175px;
+
+            padding: 15px 28px;
+
+            border: 1px solid var(--navy);
+
+            background: transparent;
+
+            color: var(--navy);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 9px;
+
+            letter-spacing: 4px;
+
+            cursor: pointer;
+
+            overflow: hidden;
+
+            transition:
+                color 0.4s ease,
+                transform 0.3s ease;
+
+            opacity: 0;
+
+            animation:
+                fadeUp 1.5s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                1.5s
+                forwards;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        .continue-button::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 0%;
+
+            background: var(--navy);
+
+            transition: height 0.4s ease;
+
+            z-index: -1;
+        }
+
+
+        .continue-button:hover {
+            color: var(--cream);
+
+            transform: translateY(-3px);
+        }
+
+
+        .continue-button:hover::before {
+            height: 100%;
+        }
+
+
+        .continue-button:active {
+            transform: scale(0.97);
+        }
+
+
+        /* ==================================================
+           BOTTOM TEXT
+        ================================================== */
+
+        .bottom {
+            position: absolute;
+
+            bottom: 48px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 8px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            color: var(--navy);
+
+            opacity: 0;
+
+            animation:
+                fadeIn 1.5s ease
+                2s
+                forwards;
+
+            white-space: nowrap;
+        }
+
+
+        /* ==================================================
+           PAGE TRANSITION
+        ================================================== */
+
+        .transition {
+            position: fixed;
+
+            inset: 0;
+
+            background: var(--black);
+
+            z-index: 100;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition: opacity 0.8s ease;
+        }
+
+
+        .transition.active {
+            opacity: 1;
+        }
+
+
+        /* ==================================================
+           ANIMATIONS
+        ================================================== */
+
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes expandLine {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    scaleX(0);
+            }
+
+            to {
+                opacity: 0.6;
+
+                transform:
+                    scaleX(1);
+            }
+        }
+
+
+        /* ==================================================
+           MOBILE
+        ================================================== */
+
+        @media (max-width: 600px) {
+
+            .page {
+                padding: 35px 25px;
+            }
+
+
+            .frame {
+                inset: 16px;
+            }
+
+
+            .label {
+                top: 38px;
+
+                font-size: 8px;
+
+                letter-spacing: 3px;
+            }
+
+
+            .number {
+                margin-bottom: 20px;
+
+                font-size: 9px;
+            }
+
+
+            h1 {
+                font-size: clamp(
+                    39px,
+                    12vw,
+                    58px
+                );
+
+                letter-spacing: -1.5px;
+            }
+
+
+            .divider {
+                margin: 25px 0;
+            }
+
+
+            .message {
+                max-width: 310px;
+
+                font-size: 14px;
+
+                line-height: 1.9;
+            }
+
+
+            .continue-button {
+                margin-top: 35px;
+
+                min-width: 155px;
+
+                padding: 14px 22px;
+            }
+
+
+            .bottom {
+                bottom: 30px;
+
+                font-size: 7px;
+
+                letter-spacing: 2px;
+            }
+        }
+
+
+        /* ==================================================
+           REDUCED MOTION
+        ================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         PAGE TRANSITION
+    ================================================== -->
+
+    <div
+        class="transition"
+        id="pageTransition"
+    ></div>
+
+
+    <!-- ==================================================
+         PAGE CONTENT
+    ================================================== -->
+
+    <main class="page">
+
+
+        <!-- Decorative frame -->
+
+        <div class="frame"></div>
+
+
+        <!-- Top label -->
+
+        <div class="label">
+            A little note
+        </div>
+
+
+        <!-- Main content -->
+
+        <section class="content">
+
+
+            <div class="number">
+                02 / 09
+            </div>
+
+
+            <h1>
+                Just stay<br>
+                for a minute.
+            </h1>
+
+
+            <div class="divider"></div>
+
+
+            <p class="message">
+
+                <span class="line">
+                    I could've just sent you
+                    a long text,
+                </span>
+
+                <span class="line">
+                    but that felt way too ordinary.
+                </span>
+
+                <span class="line emphasis">
+                    So instead, i made you
+                    a whole little world.
+                </span>
+
+                <br>
+
+                <span class="line">
+                    There’s nothing perfect about it.
+                </span>
+
+                <span class="line">
+                    It’s just me, putting a bunch
+                    of feelings into something
+                    you can actually see.
+                </span>
+
+            </p>
+
+
+            <button
+                class="continue-button"
+                id="continueButton"
+                type="button"
+            >
+                Keep going
+            </button>
+
+
+        </section>
+
+
+        <!-- Bottom -->
+
+        <div class="bottom">
+            Trust me, there’s more.
+        </div>
+
+
+    </main>
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script>
+
+        const continueButton =
+            document.getElementById("continueButton");
+
+        const pageTransition =
+            document.getElementById("pageTransition");
+
+
+        continueButton.addEventListener(
+            "click",
+            function () {
+
+                pageTransition.classList.add("active");
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "story.html";
+
+                    },
+                    800
+                );
+
+            }
+        );
+
+    </script>
+
+
+</body>
+</html>

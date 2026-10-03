@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Story — For Amurwabhumi</title>
+
+  <style>
+    :root {
+      --cream: #FFFDD0;
+      --black: #02020A;
+      --navy: #05204A;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--black);
+      color: var(--cream);
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-x: hidden;
+    }
+
+    /* ---------- BACKGROUND ---------- */
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          circle at 15% 20%,
+          rgba(5, 32, 74, 0.75),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 85% 80%,
+          rgba(5, 32, 74, 0.55),
+          transparent 35%
+        );
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(
+          circle,
+          rgba(255,253,208,0.25) 1px,
+          transparent 1px
+        );
+      background-size: 80px 80px;
+      opacity: 0.12;
+      z-index: -1;
+    }
+
+    /* ---------- DECORATIVE FRAME ---------- */
+
+    .frame {
+      position: fixed;
+      inset: 18px;
+      border: 1px solid rgba(255,253,208,0.18);
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .frame::before,
+    .frame::after {
+      content: "";
+      position: absolute;
+      width: 45px;
+      height: 45px;
+      border-color: var(--cream);
+      border-style: solid;
+      opacity: 0.5;
+    }
+
+    .frame::before {
+      top: -1px;
+      left: -1px;
+      border-width: 1px 0 0 1px;
+    }
+
+    .frame::after {
+      bottom: -1px;
+      right: -1px;
+      border-width: 0 1px 1px 0;
+    }
+
+    /* ---------- HERO ---------- */
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 28px 80px;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 700px;
+      animation: reveal 1.2s ease forwards;
+    }
+
+    .eyebrow {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      letter-spacing: 4px;
+      opacity: 0.65;
+      margin-bottom: 24px;
+    }
+
+    .page-number {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--cream);
+      opacity: 0.5;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-size: clamp(48px, 11vw, 100px);
+      font-weight: normal;
+      line-height: 0.95;
+      letter-spacing: -3px;
+      margin-bottom: 30px;
+    }
+
+    .hero-text {
+      max-width: 510px;
+      margin: auto;
+      font-size: 16px;
+      line-height: 1.9;
+      opacity: 0.72;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 55px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      opacity: 0.45;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .scroll-hint::after {
+      content: "";
+      display: block;
+      width: 1px;
+      height: 35px;
+      margin: 12px auto 0;
+      background: var(--cream);
+      opacity: 0.5;
+    }
+
+    /* ---------- STORY ---------- */
+
+    .story {
+      max-width: 900px;
+      margin: auto;
+      padding: 80px 28px 180px;
+      position: relative;
+    }
+
+    .story-line {
+      position: absolute;
+      left: 50%;
+      top: 90px;
+      bottom: 150px;
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(255,253,208,0.45),
+        transparent
+      );
+      transform: translateX(-50%);
+    }
+
+    .moment {
+      width: 100%;
+      display: flex;
+      margin-bottom: 130px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(45px);
+      transition:
+        opacity 1s ease,
+        transform 1s ease;
+    }
+
+    .moment.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .moment:nth-child(odd) {
+      justify-content: flex-start;
+      padding-right: 52%;
+    }
+
+    .moment:nth-child(even) {
+      justify-content: flex-end;
+      padding-left: 52%;
+    }
+
+    .moment-dot {
+      position: absolute;
+      left: 50%;
+      top: 30px;
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--cream);
+      background: var(--black);
+      transform: translateX(-50%) rotate(45deg);
+      box-shadow:
+        0 0 0 7px rgba(255,253,208,0.03),
+        0 0 18px rgba(255,253,208,0.18);
+      z-index: 2;
+    }
+
+    .moment-card {
+      width: 100%;
+      padding: 28px;
+      border: 1px solid rgba(255,253,208,0.18);
+      background: rgba(5,32,74,0.38);
+      backdrop-filter: blur(10px);
+      transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        background 0.4s ease;
+      cursor: default;
+    }
+
+    .moment-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255,253,208,0.45);
+      background: rgba(5,32,74,0.65);
+    }
+
+    .date {
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      opacity: 0.5;
+      margin-bottom: 18px;
+    }
+
+    .moment-title {
+      font-size: 27px;
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 15px;
+    }
+
+    .moment-description {
+      font-size: 14px;
+      line-height: 1.8;
+      opacity: 0.65;
+    }
+
+    /* ---------- PHOTO ---------- */
+
+    .memory-image {
+      height: 190px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255,253,208,0.15);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,253,208,0.04),
+          rgba(2,2,10,0.4)
+        );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .memory-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .memory-image span {
+      position: absolute;
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .memory-image::before,
+    .memory-image::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,253,208,0.08);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .memory-image::before {
+      width: 140%;
+      height: 1px;
+      transform: rotate(-18deg);
+    }
+
+    .memory-image::after {
+      height: 140%;
+      width: 1px;
+      transform: rotate(-18deg);
+    }
+
+    /* ---------- FINAL NOTE ---------- */
+
+    .story-end {
+      text-align: center;
+      max-width: 600px;
+      margin: 30px auto 0;
+      padding: 50px 0;
+    }
+
+    .story-end .small {
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      letter-spacing: 4px;
+      opacity: 0.45;
+      margin-bottom: 25px;
+    }
+
+    .story-end h2 {
+      font-size: clamp(32px, 7vw, 58px);
+      font-weight: normal;
+      line-height: 1.15;
+      margin-bottom: 25px;
+    }
+
+    .story-end p {
+      font-size: 15px;
+      line-height: 1.9;
+      opacity: 0.65;
+    }
+
+    /* ---------- BUTTON ---------- */
+
+    .next-section {
+      text-align: center;
+      padding: 30px 20px 120px;
+    }
+
+    .next-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 26px;
+      color: var(--cream);
+      border: 1px solid rgba(255,253,208,0.35);
+      background: transparent;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      transition: all 0.35s ease;
+      cursor: pointer;
+    }
+
+    .next-button:hover {
+      background: var(--cream);
+      color: var(--black);
+      border-color: var(--cream);
+    }
+
+    .arrow {
+      font-size: 14px;
+      transition: transform 0.35s ease;
+    }
+
+    .next-button:hover .arrow {
+      transform: translateX(5px);
+    }
+
+    /* ---------- FOOTER ---------- */
+
+    footer {
+      text-align: center;
+      padding: 0 20px 60px;
+      font-family: Arial, sans-serif;
+      font-size: 8px;
+      letter-spacing: 3px;
+      opacity: 0.3;
+    }
+
+    /* ---------- TRANSITION ---------- */
+
+    .page-transition {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 100;
+      transform: translateY(100%);
+      transition:
+        transform 0.7s cubic-bezier(.77,0,.18,1);
+      pointer-events: none;
+    }
+
+    .page-transition.active {
+      transform: translateY(0);
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(8px);
+      }
+    }
+
+    /* ---------- MOBILE ---------- */
+
+    @media (max-width: 700px) {
+
+      .frame {
+        inset: 10px;
+      }
+
+      .hero {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero-text {
+        font-size: 14px;
+      }
+
+      .story {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .story-line {
+        left: 18px;
+        top: 90px;
+        bottom: 150px;
+      }
+
+      .moment {
+        padding: 0 !important;
+        justify-content: flex-end !important;
+        padding-left: 42px !important;
+        margin-bottom: 85px;
+      }
+
+      .moment-dot {
+        left: 18px;
+        top: 30px;
+      }
+
+      .moment-card {
+        padding: 22px;
+      }
+
+      .memory-image {
+        height: 150px;
+      }
+
+      .moment-title {
+        font-size: 23px;
+      }
+
+      .moment-description {
+        font-size: 13px;
+      }
+
+      .story-end {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="frame"></div>
+  <div class="page-transition"></div>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="eyebrow">
+        Our story
+      </div>
+
+      <div class="page-number">
+        03 / 09
+      </div>
+
+      <h1>
+        And somehow,<br>here we are.
+      </h1>
+
+      <p class="hero-text">
+        Funny how one ordinary day can quietly change everything.
+        You probably didn't know it then,
+        but meeting you was about to become
+        one of my favorite things.
+      </p>
+
+    </div>
+
+    <div class="scroll-hint">
+      Scroll
+    </div>
+
+  </section>
+
+
+  <!-- TIMELINE -->
+
+  <section class="story">
+
+    <div class="story-line"></div>
+
+
+    <!-- MOMENT 01 -->
+
+    <article class="moment">
+
+      <div class="moment-dot"></div>
+
+      <div class="moment-card">
+
+        <div class="memory-image">
+          <img
+            src="foto1.jpg"
+            alt="The day i met you"
+          >
+        </div>
+
+        <div class="date">
+          9 August 2026
+        </div>
+
+        <h2 class="moment-title">
+          The day i met you.
+        </h2>
+
+        <p class="moment-description">
+          Funny how i didn't know that day would mean anything special.
+          I just met you, and that was it.
+          But somehow, you slowly became a part of my days,
+          my thoughts, and my little world.
+          If i could go back to that exact moment,
+          i'd still choose to meet you again.
+          No hesitation.
+          I'm really, really glad it was you.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- MOMENT 02 -->
+
+    <article class="moment">
+
+      <div class="moment-dot"></div>
+
+      <div class="moment-card">
+
+        <div class="memory-image">
+          <img
+            src="foto2.jpg"
+            alt="A little moment"
+          >
+        </div>
+
+        <div class="date">
+          [ ♥ ]
+        </div>
+
+        <h2 class="moment-title">
+          The little things.
+        </h2>
+
+        <p class="moment-description">
+          Maybe it wasn't one huge moment.
+          Maybe it was all the tiny conversations,
+          random laughs,
+          and little things we slowly learned
+          about each other.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- MOMENT 03 -->
+
+    <article class="moment">
+
+      <div class="moment-dot"></div>
+
+      <div class="moment-card">
+
+        <div class="memory-image">
+          <img
+            src="foto3.jpg"
+            alt="Somewhere along the way"
+          >
+        </div>
+        
+        <div class="date">
+          [ ♥ ]
+     
+        </div>
+
+        <h2 class="moment-title">
+          Somewhere along the way.
+        </h2>
+
+        <p class="moment-description">
+          Somewhere between all those ordinary days,
+          you became someone who slowly found
+          a place in my little world.
+          And honestly...
+          i kinda like that you did.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- MOMENT 04 -->
+
+    <article class="moment">
+
+      <div class="moment-dot"></div>
+
+      <div class="moment-card">
+
+        <div class="memory-image">
+          <img
+            src="foto4.jpg"
+            alt="And here we are"
+          >
+        </div>
+        
+        <div class="date">
+          [♥]
+        </div>
+
+        <h2 class="moment-title">
+          And here we are.
+        </h2>
+
+        <p class="moment-description">
+          Still writing it.
+          Still making little memories.
+          Still discovering new things about each other.
+          And hopefully,
+          still choosing to stay for whatever comes next.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- END -->
+
+    <div class="story-end">
+
+      <div class="small">
+        For Amurwabhumi
+      </div>
+
+      <h2>
+        I'm glad<br>it was you.
+      </h2>
+
+      <p>
+        I don't think our story needs to be perfect.
+        I just want it to keep going.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- NEXT -->
+
+  <div class="next-section">
+
+    <a
+      href="memories.html"
+      class="next-button"
+    >
+      Our memories
+      <span class="arrow">→</span>
+    </a>
+
+  </div>
+
+
+  <footer>
+    Made for Amurwabhumi · 03 / 09
+  </footer>
+
+
+  <script>
+
+    /* ---------- SCROLL REVEAL ---------- */
+
+    const moments =
+      document.querySelectorAll(".moment");
+
+    const observer =
+      new IntersectionObserver(
+        (entries) => {
+
+          entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+
+          });
+
+        },
+        {
+          threshold: 0.18
+        }
+      );
+
+    moments.forEach(moment => {
+      observer.observe(moment);
+    });
+
+
+    /* ---------- PAGE TRANSITION ---------- */
+
+    const transition =
+      document.querySelector(".page-transition");
+
+    const nextButton =
+      document.querySelector(".next-button");
+
+    nextButton.addEventListener(
+      "click",
+      function(event) {
+
+        event.preventDefault();
+
+        const destination = this.href;
+
+        transition.classList.add("active");
+
+        setTimeout(() => {
+          window.location.href = destination;
+        }, 650);
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>

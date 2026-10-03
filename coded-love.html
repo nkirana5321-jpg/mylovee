@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coded love · Amurwabhumi</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #02020A;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            color: #FFFDD0;
+        }
+
+        .page {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at center,
+                    #05204A 0%,
+                    #02020A 55%,
+                    #02020A 100%
+                );
+        }
+
+        canvas {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .ambient {
+            position: absolute;
+            width: 55vw;
+            height: 55vw;
+            max-width: 500px;
+            max-height: 500px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: #05204A;
+            opacity: 0.22;
+            filter: blur(100px);
+            pointer-events: none;
+        }
+
+        .top {
+            position: absolute;
+            top: 28px;
+            left: 28px;
+            right: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .eyebrow {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.55;
+        }
+
+        .page-number {
+            font-size: 10px;
+            letter-spacing: 2px;
+            opacity: 0.35;
+        }
+
+        .terminal {
+            position: absolute;
+            z-index: 10;
+            width: min(560px, calc(100% - 32px));
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition:
+                opacity 0.9s ease,
+                transform 0.9s ease;
+        }
+
+        .terminal.hide {
+            opacity: 0;
+            transform: translate(-50%, -54%);
+            pointer-events: none;
+        }
+
+        .terminal-box {
+            border: 1px solid rgba(255, 253, 208, 0.15);
+            background: rgba(2, 2, 10, 0.9);
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                inset 0 0 50px rgba(5, 32, 74, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .terminal-header {
+            height: 38px;
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            border-bottom:
+                1px solid rgba(255, 253, 208, 0.08);
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            margin-right: 6px;
+            border-radius: 50%;
+            background: #FFFDD0;
+            opacity: 0.35;
+        }
+
+        .terminal-name {
+            margin-left: 8px;
+            font-family: monospace;
+            font-size: 10px;
+            letter-spacing: 1px;
+            opacity: 0.4;
+        }
+
+        .terminal-body {
+            padding: 25px 22px 22px;
+        }
+
+        .line {
+            min-height: 25px;
+            font-family: "Courier New", monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(4px);
+            transition:
+                opacity 0.35s ease,
+                transform 0.35s ease;
+        }
+
+        .line.visible {
+            opacity: 0.78;
+            transform: translateY(0);
+        }
+
+        .prompt {
+            opacity: 0.4;
+        }
+
+        .found {
+            opacity: 1 !important;
+        }
+
+        .loading {
+            margin-top: 22px;
+        }
+
+        .loading-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-family: monospace;
+            font-size: 10px;
+            opacity: 0.45;
+        }
+
+        .bar {
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 253, 208, 0.1);
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            width: 0%;
+            height: 100%;
+            background: #FFFDD0;
+            box-shadow:
+                0 0 14px rgba(255, 253, 208, 0.55);
+            transition: width 0.08s linear;
+        }
+
+        .heart-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 8;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.2s ease;
+        }
+
+        .heart-content.show {
+            opacity: 1;
+        }
+
+        .center-text {
+            position: relative;
+            z-index: 10;
+            width: 280px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition:
+                opacity 1.2s ease 0.5s,
+                transform 1.2s ease 0.5s;
+        }
+
+        .heart-content.show .center-text {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .made-for {
+            margin-bottom: 9px;
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.48;
+        }
+
+        .name {
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+            font-size: clamp(34px, 9vw, 68px);
+            line-height: 1;
+            font-weight: normal;
+            letter-spacing: -2px;
+            color: #FFFDD0;
+            text-shadow:
+                0 0 8px rgba(255, 253, 208, 0.35),
+                0 0 25px rgba(255, 253, 208, 0.16);
+        }
+
+        .subtext {
+            margin-top: 17px;
+            font-family: monospace;
+            font-size: 10px;
+            line-height: 1.7;
+            opacity: 0.5;
+        }
+
+        .quote {
+            position: absolute;
+            left: 50%;
+            bottom: 72px;
+            width: min(500px, calc(100% - 40px));
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 15;
+            opacity: 0;
+            transition:
+                opacity 1s ease 1.3s;
+        }
+
+        .quote.show {
+            opacity: 0.68;
+        }
+
+        .quote-text {
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+            font-size: 13px;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        .quote-author {
+            margin-top: 8px;
+            font-size: 8px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.45;
+        }
+
+        .actions {
+            position: absolute;
+            left: 50%;
+            bottom: 22px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 9px;
+            z-index: 20;
+            opacity: 0;
+            transition:
+                opacity 0.8s ease 1.7s;
+        }
+
+        .actions.show {
+            opacity: 1;
+        }
+
+        button {
+            padding: 9px 14px;
+            border:
+                1px solid rgba(255, 253, 208, 0.18);
+            background: rgba(2, 2, 10, 0.55);
+            color: #FFFDD0;
+            font-size: 9px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        button:hover {
+            background: #05204A;
+            border-color:
+                rgba(255, 253, 208, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 25px;
+            left: 27px;
+            right: 27px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 20;
+            font-size: 8px;
+            letter-spacing: 1.5px;
+            opacity: 0.25;
+        }
+
+        @media (max-width: 600px) {
+
+            .top {
+                top: 20px;
+                left: 19px;
+                right: 19px;
+            }
+
+            .terminal-body {
+                padding: 21px 17px;
+            }
+
+            .line {
+                font-size: 10px;
+            }
+
+            .name {
+                font-size: 43px;
+            }
+
+            .center-text {
+                width: 270px;
+            }
+
+            .quote {
+                bottom: 77px;
+            }
+
+            .quote-text {
+                font-size: 11px;
+            }
+
+            .actions {
+                bottom: 19px;
+            }
+
+            .footer {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="ambient"></div>
+
+    <canvas id="c"></canvas>
+
+    <div class="top">
+
+        <div class="eyebrow">
+            Coded love
+        </div>
+
+        <div class="page-number">
+            08 / 09
+        </div>
+
+    </div>
+
+    <div class="terminal" id="terminal">
+
+        <div class="terminal-box">
+
+            <div class="terminal-header">
+
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+
+                <div class="terminal-name">
+                    love.exe
+                </div>
+
+            </div>
+
+            <div class="terminal-body">
+
+                <div class="line" id="line1">
+                    <span class="prompt">&gt;</span>
+                    Initializing love.exe...
+                </div>
+
+                <div class="line" id="line2">
+                    <span class="prompt">&gt;</span>
+                    Compiling feelings...
+                </div>
+
+                <div class="line" id="line3">
+                    <span class="prompt">&gt;</span>
+                    Loading memories...
+                </div>
+
+                <div class="line" id="line4">
+                    <span class="prompt">&gt;</span>
+                    Searching for someone special...
+                </div>
+
+                <div class="line" id="line5">
+                    <span class="prompt">&gt;</span>
+                    Target: Amurwabhumi
+                </div>
+
+                <div class="line found" id="line6">
+                    <span class="prompt">&gt;</span>
+                    Status: Love_found ♥
+                </div>
+
+                <div class="loading">
+
+                    <div class="loading-info">
+
+                        <span>
+                            LOVE.EXE
+                        </span>
+
+                        <span id="percent">
+                            0%
+                        </span>
+
+                    </div>
+
+                    <div class="bar">
+
+                        <div
+                            class="bar-fill"
+                            id="barFill">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div
+        class="heart-content"
+        id="heartContent"
+    >
+
+        <div class="center-text">
+
+            <div class="made-for">
+                Made for
+            </div>
+
+            <div class="name">
+                Amurwabhumi
+            </div>
+
+            <div class="subtext">
+                Because apparently coding love<br>
+                is a thing now.
+            </div>
+
+        </div>
+
+    </div>
+
+    <div
+        class="quote"
+        id="quote"
+    >
+
+        <div class="quote-text">
+            “If i could turn everything i feel into code,
+            i think i'd still run out of lines.”
+        </div>
+
+        <div class="quote-author">
+            For you, always
+        </div>
+
+    </div>
+
+    <div
+        class="actions"
+        id="actions"
+    >
+
+        <button id="again">
+            Run it again
+        </button>
+
+        <button id="next">
+            Take me to the end →
+        </button>
+
+    </div>
+
+    <div class="footer">
+
+        <span>
+            Made with love
+        </span>
+
+        <span>
+            08 / 09
+        </span>
+
+    </div>
+
+</div>
+
+<script>
+
+const canvas =
+    document.getElementById("c");
+
+const ctx =
+    canvas.getContext("2d");
+
+let W;
+let H;
+let CX;
+let CY;
+let SCALE;
+
+const DPR =
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    );
+
+const points = [];
+
+const TOTAL =
+    window.innerWidth < 600
+        ? 72
+        : 105;
+
+const text =
+    "I love you";
+
+
+function heart(t) {
+
+    const x =
+        16 *
+        Math.pow(
+            Math.sin(t),
+            3
+        );
+
+    const y =
+        13 * Math.cos(t)
+        - 5 * Math.cos(2 * t)
+        - 2 * Math.cos(3 * t)
+        - Math.cos(4 * t);
+
+    return {
+        x: x * SCALE,
+        y: -y * SCALE
+    };
+}
+
+
+function buildPoints() {
+
+    points.length = 0;
+
+    for (
+        let i = 0;
+        i < TOTAL;
+        i++
+    ) {
+
+        const t =
+            (i / TOTAL) *
+            Math.PI *
+            2;
+
+        points.push({
+
+            baseT: t,
+
+            phase:
+                Math.random() *
+                Math.PI *
+                2,
+
+            alpha:
+                Math.random() *
+                0.35 +
+                0.65
+
+        });
+    }
+}
+
+
+function resize() {
+
+    W =
+        window.innerWidth;
+
+    H =
+        window.innerHeight;
+
+    canvas.width =
+        W * DPR;
+
+    canvas.height =
+        H * DPR;
+
+    canvas.style.width =
+        W + "px";
+
+    canvas.style.height =
+        H + "px";
+
+    ctx.setTransform(
+        DPR,
+        0,
+        0,
+        DPR,
+        0,
+        0
+    );
+
+    CX =
+        W / 2;
+
+    CY =
+        H / 2 + 5;
+
+    SCALE =
+        Math.min(W, H) *
+        0.0128;
+
+    buildPoints();
+}
+
+
+window.addEventListener(
+    "resize",
+    resize
+);
+
+resize();
+
+
+function glowText(
+    txt,
+    x,
+    y,
+    angle,
+    size,
+    alpha = 1
+) {
+
+    ctx.save();
+
+    ctx.translate(x, y);
+
+    ctx.rotate(angle);
+
+    ctx.font =
+        `bold ${size}px Arial, sans-serif`;
+
+    ctx.textAlign =
+        "center";
+
+    ctx.textBaseline =
+        "middle";
+
+    ctx.shadowColor =
+        "rgba(255, 253, 208, 0.9)";
+
+    ctx.shadowBlur =
+        14;
+
+    ctx.fillStyle =
+        `rgba(255, 253, 208, ${alpha})`;
+
+    ctx.fillText(
+        txt,
+        0,
+        0
+    );
+
+    ctx.shadowBlur =
+        4;
+
+    ctx.fillStyle =
+        `rgba(255, 253, 208, ${Math.min(
+            alpha + 0.15,
+            1
+        )})`;
+
+    ctx.fillText(
+        txt,
+        0,
+        0
+    );
+
+    ctx.restore();
+}
+
+
+let heartVisible =
+    false;
+
+let heartReveal =
+    0;
+
+
+function drawHeart(time) {
+
+    if (!heartVisible) {
+        return;
+    }
+
+    const beat =
+        1 +
+        Math.pow(
+            Math.max(
+                0,
+                Math.sin(
+                    time * 0.0024
+                )
+            ),
+            12
+        ) * 0.045;
+
+    const reveal =
+        Math.min(
+            heartReveal,
+            1
+        );
+
+
+    for (
+        let i = 0;
+        i < points.length;
+        i++
+    ) {
+
+        const p =
+            points[i];
+
+        const threshold =
+            i / points.length;
+
+        if (
+            threshold >
+            reveal
+        ) {
+            continue;
+        }
+
+        const hp =
+            heart(
+                p.baseT
+            );
+
+        const floating =
+            Math.sin(
+                time * 0.0015 +
+                p.phase
+            ) * 1.2;
+
+        const x =
+            CX +
+            hp.x *
+            beat +
+            floating;
+
+        const y =
+            CY +
+            hp.y *
+            beat +
+            Math.cos(
+                time * 0.0012 +
+                p.phase
+            ) * 1.2;
+
+        const angle =
+            Math.sin(
+                time * 0.001 +
+                p.phase
+            ) * 0.04;
+
+        const size =
+            Math.max(
+                7,
+                Math.min(W, H) *
+                0.014
+            );
+
+        const alpha =
+            0.62 +
+            Math.sin(
+                time * 0.002 +
+                p.phase
+            ) * 0.18;
+
+        glowText(
+            text,
+            x,
+            y,
+            angle,
+            size,
+            alpha
+        );
+    }
+}
+
+
+const floatingWords = [];
+
+
+function createFloatingWords() {
+
+    floatingWords.length = 0;
+
+    const words = [
+        "love",
+        "you",
+        "always",
+        "♡",
+        "us",
+        "forever",
+        "you",
+        "love"
+    ];
+
+    for (
+        let i = 0;
+        i < words.length;
+        i++
+    ) {
+
+        floatingWords.push({
+
+            text:
+                words[i],
+
+            x:
+                Math.random() *
+                W,
+
+            y:
+                Math.random() *
+                H,
+
+            speed:
+                0.08 +
+                Math.random() *
+                0.12,
+
+            phase:
+                Math.random() *
+                Math.PI *
+                2,
+
+            alpha:
+                0.06 +
+                Math.random() *
+                0.09
+
+        });
+    }
+}
+
+
+createFloatingWords();
+
+
+function drawFloatingWords(time) {
+
+    if (!heartVisible) {
+        return;
+    }
+
+    ctx.save();
+
+    ctx.font =
+        "10px monospace";
+
+    ctx.textAlign =
+        "center";
+
+    ctx.textBaseline =
+        "middle";
+
+    for (
+        const item of floatingWords
+    ) {
+
+        const x =
+            item.x +
+            Math.sin(
+                time * 0.0008 +
+                item.phase
+            ) * 12;
+
+        const y =
+            item.y -
+            (
+                time *
+                item.speed *
+                0.01
+            ) % (H + 30);
+
+        ctx.fillStyle =
+            `rgba(255,253,208,${item.alpha})`;
+
+        ctx.fillText(
+            item.text,
+            x,
+            y < -20
+                ? y + H + 30
+                : y
+        );
+    }
+
+    ctx.restore();
+}
+
+
+function animate(time) {
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+    drawFloatingWords(time);
+
+    drawHeart(time);
+
+    if (
+        heartVisible &&
+        heartReveal < 1
+    ) {
+
+        heartReveal +=
+            0.012;
+    }
+
+    requestAnimationFrame(
+        animate
+    );
+}
+
+
+requestAnimationFrame(
+    animate
+);
+
+
+/* =========================
+   LOADING
+========================= */
+
+const terminal =
+    document.getElementById(
+        "terminal"
+    );
+
+const barFill =
+    document.getElementById(
+        "barFill"
+    );
+
+const percent =
+    document.getElementById(
+        "percent"
+    );
+
+const heartContent =
+    document.getElementById(
+        "heartContent"
+    );
+
+const quote =
+    document.getElementById(
+        "quote"
+    );
+
+const actions =
+    document.getElementById(
+        "actions"
+    );
+
+
+const lines = [
+    document.getElementById("line1"),
+    document.getElementById("line2"),
+    document.getElementById("line3"),
+    document.getElementById("line4"),
+    document.getElementById("line5"),
+    document.getElementById("line6")
+];
+
+
+let timers = [];
+
+
+function clearTimers() {
+
+    timers.forEach(
+        timer =>
+            clearTimeout(timer)
+    );
+
+    timers = [];
+}
+
+
+function wait(
+    callback,
+    time
+) {
+
+    const timer =
+        setTimeout(
+            callback,
+            time
+        );
+
+    timers.push(timer);
+}
+
+
+function start() {
+
+    clearTimers();
+
+    heartVisible =
+        false;
+
+    heartReveal =
+        0;
+
+    terminal.classList.remove(
+        "hide"
+    );
+
+    heartContent.classList.remove(
+        "show"
+    );
+
+    quote.classList.remove(
+        "show"
+    );
+
+    actions.classList.remove(
+        "show"
+    );
+
+    barFill.style.width =
+        "0%";
+
+    percent.textContent =
+        "0%";
+
+    lines.forEach(
+        line =>
+            line.classList.remove(
+                "visible"
+            )
+    );
+
+
+    let index = 0;
+
+
+    function nextLine() {
+
+        if (
+            index >=
+            lines.length
+        ) {
+
+            startProgress();
+
+            return;
+        }
+
+        lines[
+            index
+        ].classList.add(
+            "visible"
+        );
+
+        index++;
+
+
+        wait(
+            nextLine,
+            450
+        );
+    }
+
+
+    nextLine();
+}
+
+
+function startProgress() {
+
+    let value = 0;
+
+
+    function progress() {
+
+        value++;
+
+        barFill.style.width =
+            value + "%";
+
+        percent.textContent =
+            value + "%";
+
+
+        if (
+            value < 100
+        ) {
+
+            wait(
+                progress,
+                25
+            );
+
+        } else {
+
+            wait(
+                finish,
+                650
+            );
+        }
+    }
+
+
+    progress();
+}
+
+
+function finish() {
+
+    terminal.classList.add(
+        "hide"
+    );
+
+
+    wait(
+        () => {
+
+            heartVisible =
+                true;
+
+            heartReveal =
+                0;
+
+            heartContent.classList.add(
+                "show"
+            );
+
+            quote.classList.add(
+                "show"
+            );
+
+            actions.classList.add(
+                "show"
+            );
+
+        },
+        350
+    );
+}
+
+
+document
+    .getElementById("again")
+    .addEventListener(
+        "click",
+        start
+    );
+
+
+document
+    .getElementById("next")
+    .addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "final.html";
+
+        }
+    );
+
+
+start();
+
+</script>
+
+</body>
+</html>

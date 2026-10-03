@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>For You, Always — Amurwabhumi</title>
+
+  <style>
+    :root {
+      --cream: #FFFDD0;
+      --black: #02020A;
+      --navy: #05204A;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at 50% 42%,
+          var(--navy) 0%,
+          #031a3d 20%,
+          var(--black) 70%
+        );
+
+      color: var(--cream);
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      overflow-x: hidden;
+
+      opacity: 0;
+      animation: pageIn 1.2s ease forwards;
+    }
+
+    @keyframes pageIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    body::before {
+      content: "";
+
+      position: fixed;
+      inset: 18px;
+
+      border:
+        1px solid
+        rgba(255, 253, 208, 0.15);
+
+      pointer-events: none;
+
+      z-index: 100;
+    }
+
+
+    /* =========================
+       BACKGROUND
+    ========================= */
+
+    .background {
+      position: fixed;
+      inset: 0;
+
+      overflow: hidden;
+
+      pointer-events: none;
+
+      z-index: 0;
+    }
+
+    .glow {
+      position: absolute;
+
+      left: 50%;
+      top: 42%;
+
+      width: 450px;
+      height: 450px;
+
+      transform:
+        translate(-50%, -50%);
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(5, 32, 74, 0.8),
+          transparent 68%
+        );
+
+      filter: blur(20px);
+
+      animation:
+        breathe 7s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+
+      0%, 100% {
+        transform:
+          translate(-50%, -50%)
+          scale(0.9);
+        opacity: 0.7;
+      }
+
+      50% {
+        transform:
+          translate(-50%, -50%)
+          scale(1.12);
+        opacity: 1;
+      }
+    }
+
+
+    /* =========================
+       STARS
+    ========================= */
+
+    .star {
+      position: absolute;
+
+      width: 2px;
+      height: 2px;
+
+      background: var(--cream);
+
+      border-radius: 50%;
+
+      opacity: 0.25;
+
+      animation:
+        twinkle 4s ease-in-out infinite;
+    }
+
+    .star:nth-child(2) {
+      top: 17%;
+      left: 14%;
+    }
+
+    .star:nth-child(3) {
+      top: 24%;
+      right: 19%;
+      animation-delay: 1s;
+    }
+
+    .star:nth-child(4) {
+      top: 54%;
+      left: 9%;
+      animation-delay: 2s;
+    }
+
+    .star:nth-child(5) {
+      top: 69%;
+      right: 12%;
+      animation-delay: 3s;
+    }
+
+    .star:nth-child(6) {
+      bottom: 14%;
+      left: 28%;
+      animation-delay: 1.5s;
+    }
+
+    .star:nth-child(7) {
+      top: 13%;
+      left: 50%;
+      animation-delay: 2.5s;
+    }
+
+    @keyframes twinkle {
+
+      0%, 100% {
+        opacity: 0.15;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+
+    /* =========================
+       PAGE
+    ========================= */
+
+    .page {
+      position: relative;
+
+      z-index: 2;
+
+      min-height: 100vh;
+
+      width:
+        min(850px, 100%);
+
+      margin: auto;
+
+      padding:
+        65px 30px
+        90px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      text-align: center;
+    }
+
+
+    /* =========================
+       TOP
+    ========================= */
+
+    .top {
+      width: 100%;
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      font-family: Arial, sans-serif;
+
+      font-size: 10px;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
+      opacity: 0.5;
+    }
+
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+      margin-top: 95px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+    }
+
+    .eyebrow {
+      font-family: Arial, sans-serif;
+
+      font-size: 9px;
+
+      letter-spacing: 4px;
+
+      text-transform: uppercase;
+
+      opacity: 0.5;
+
+      margin-bottom: 30px;
+    }
+
+
+    /* =========================
+       TITLE
+    ========================= */
+
+    h1 {
+      font-size:
+        clamp(55px, 13vw, 120px);
+
+      line-height: 0.88;
+
+      font-weight: 400;
+
+      letter-spacing: -6px;
+
+      max-width: 800px;
+    }
+
+    h1 span {
+      display: block;
+    }
+
+    h1 .second {
+      font-style: italic;
+
+      font-size:
+        clamp(48px, 11vw, 105px);
+
+      margin-left: 35px;
+    }
+
+
+    /* =========================
+       DATE
+    ========================= */
+
+    .date {
+      margin-top: 40px;
+
+      font-family: Arial, sans-serif;
+
+      font-size: 10px;
+
+      letter-spacing: 4px;
+
+      text-transform: uppercase;
+
+      opacity: 0.55;
+    }
+
+
+    /* =========================
+       FINAL LETTER
+    ========================= */
+
+    .final-message {
+      max-width: 610px;
+
+      margin-top: 55px;
+    }
+
+    .final-message p {
+      font-size: 18px;
+
+      line-height: 1.9;
+
+      opacity: 0.72;
+    }
+
+    .final-message p + p {
+      margin-top: 20px;
+    }
+
+
+    /* =========================
+       SIGNATURE
+    ========================= */
+
+    .signature {
+      margin-top: 55px;
+    }
+
+    .signature-line {
+      width: 45px;
+      height: 1px;
+
+      margin:
+        0 auto 22px;
+
+      background:
+        rgba(255, 253, 208, 0.4);
+    }
+
+    .signature p {
+      font-size: 22px;
+
+      font-style: italic;
+
+      opacity: 0.85;
+    }
+
+    .signature small {
+      display: block;
+
+      margin-top: 12px;
+
+      font-family: Arial, sans-serif;
+
+      font-size: 8px;
+
+      letter-spacing: 4px;
+
+      text-transform: uppercase;
+
+      opacity: 0.4;
+    }
+
+
+    /* =========================
+       FINAL LINE
+    ========================= */
+
+    .final-line {
+      width: 100%;
+
+      margin-top: 90px;
+
+      padding-top: 30px;
+
+      border-top:
+        1px solid
+        rgba(255, 253, 208, 0.12);
+    }
+
+    .final-line p {
+      font-family: Arial, sans-serif;
+
+      font-size: 9px;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
+      opacity: 0.38;
+    }
+
+
+    /* =========================
+       REPLAY
+    ========================= */
+
+    .replay {
+      margin-top: 55px;
+    }
+
+    .replay button {
+      background: transparent;
+
+      border:
+        1px solid
+        rgba(255, 253, 208, 0.35);
+
+      color: var(--cream);
+
+      padding:
+        14px 25px;
+
+      font-family: Arial, sans-serif;
+
+      font-size: 9px;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
+      cursor: pointer;
+
+      transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease;
+    }
+
+    .replay button:hover {
+      background: var(--cream);
+
+      color: var(--black);
+
+      transform:
+        translateY(-2px);
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      margin-top: 80px;
+
+      font-family: Arial, sans-serif;
+
+      font-size: 8px;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
+      opacity: 0.25;
+    }
+
+
+    /* =========================
+       ANIMATION
+    ========================= */
+
+    .fade {
+      opacity: 0;
+
+      transform:
+        translateY(25px);
+
+      animation:
+        appear 1s ease forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.25s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.5s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.8s;
+    }
+
+    .delay-4 {
+      animation-delay: 1.1s;
+    }
+
+    @keyframes appear {
+
+      to {
+        opacity: 1;
+
+        transform:
+          translateY(0);
+      }
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      body::before {
+        inset: 10px;
+      }
+
+      .page {
+        padding:
+          50px 24px
+          70px;
+      }
+
+      .main {
+        margin-top: 80px;
+      }
+
+      h1 {
+        letter-spacing: -3px;
+      }
+
+      h1 .second {
+        margin-left: 20px;
+      }
+
+      .final-message {
+        margin-top: 45px;
+      }
+
+      .final-message p {
+        font-size: 16px;
+
+        line-height: 1.8;
+      }
+
+      .glow {
+        width: 320px;
+        height: 320px;
+      }
+    }
+
+
+    /* =========================
+       REDUCED MOTION
+    ========================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration:
+          0.01ms !important;
+
+        animation-iteration-count:
+          1 !important;
+
+        transition-duration:
+          0.01ms !important;
+
+        scroll-behavior:
+          auto !important;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <!-- BACKGROUND -->
+
+  <div class="background">
+
+    <div class="glow"></div>
+
+    <span class="star"></span>
+    <span class="star"></span>
+    <span class="star"></span>
+    <span class="star"></span>
+    <span class="star"></span>
+    <span class="star"></span>
+
+  </div>
+
+
+  <!-- PAGE -->
+
+  <main class="page">
+
+    <header class="top fade">
+      <span>FOR YOU, ALWAYS</span>
+      <span>09 / 09</span>
+    </header>
+
+
+    <section class="main">
+
+      <div class="eyebrow fade delay-1">
+        And this is where i leave you
+      </div>
+
+
+      <h1 class="fade delay-2">
+
+        <span>
+          For you,
+        </span>
+
+        <span class="second">
+          always.
+        </span>
+
+      </h1>
+
+
+      <div class="date fade delay-2">
+        09 · 08 · 2026
+      </div>
+
+
+      <div class="final-message fade delay-3">
+
+        <p>
+          So... that's the little corner of the internet
+          I made for you.
+        </p>
+
+        <p>
+          Maybe one day we'll look back at this and laugh
+          at how cheesy it was. Maybe we'll remember every
+          little detail. Maybe we won't.
+        </p>
+
+        <p>
+          But right now, i just want you to know one thing:
+          I'm really glad our paths crossed.
+        </p>
+
+        <p>
+          And whatever comes next, I'm happy that
+          somewhere in this huge world, i got to meet you.
+        </p>
+
+      </div>
+
+
+      <div class="signature fade delay-4">
+
+        <div class="signature-line"></div>
+
+        <p>
+          Thank you for being you.
+        </p>
+
+        <small>
+          With love, always.
+        </small>
+
+      </div>
+
+
+      <div class="final-line fade delay-4">
+
+        <p>
+          The beginning was 9 August 2026.
+          The rest is still unwritten.
+        </p>
+
+      </div>
+
+
+      <div class="replay fade delay-4">
+
+        <button
+          id="replayButton"
+          type="button"
+        >
+          Start from the beginning
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <footer class="fade delay-4">
+      Made with love · For Amurwabhumi
+    </footer>
+
+  </main>
+
+
+  <script>
+
+    const replayButton =
+      document.getElementById("replayButton");
+
+
+    replayButton.addEventListener(
+      "click",
+      () => {
+
+        document.body.style.opacity = "0";
+
+        setTimeout(() => {
+
+          window.location.href =
+            "index.html";
+
+        }, 600);
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
